@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Shared", "Mc2.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Presentation.Server", "Mc2.CrudTest.Presentation\Server\Mc2.CrudTest.Presentation.Server.csproj", "{8D41010B-AEF1-4742-B7EC-6A5AE62C45FC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mc2.Curd", "Mc2.Curd", "{446C88B9-28CB-4CBD-8EE1-6F1921C50792}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mc2.Curd.Core", "Mc2.Curd.Core\Mc2.Curd.Core.csproj", "{4A17C8A0-C8DC-47F7-8753-0387F7830142}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,11 +37,18 @@ Global
 		{8D41010B-AEF1-4742-B7EC-6A5AE62C45FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D41010B-AEF1-4742-B7EC-6A5AE62C45FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D41010B-AEF1-4742-B7EC-6A5AE62C45FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A17C8A0-C8DC-47F7-8753-0387F7830142}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A17C8A0-C8DC-47F7-8753-0387F7830142}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A17C8A0-C8DC-47F7-8753-0387F7830142}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A17C8A0-C8DC-47F7-8753-0387F7830142}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B5A26C9-68C1-49D9-9F32-AF907A1730C2}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4A17C8A0-C8DC-47F7-8753-0387F7830142} = {446C88B9-28CB-4CBD-8EE1-6F1921C50792}
 	EndGlobalSection
 EndGlobal

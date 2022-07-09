@@ -1,10 +1,10 @@
-﻿using Mc2.CrudTest.Domain;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using Mc2.CrudTest.Domain;
 using Mc2.CrudTest.Domain.Generators;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Mc2.CrudTest.Presentation.Server.Controllers
 {

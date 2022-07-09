@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics;
 
 namespace Mc2.CrudTest.Presentation.Server.Pages
 {
@@ -9,10 +9,6 @@ namespace Mc2.CrudTest.Presentation.Server.Pages
     [IgnoreAntiforgeryToken]
     public class ErrorModel : PageModel
     {
-        public string RequestId { get; set; }
-
-        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
-
         private readonly ILogger<ErrorModel> _logger;
 
         public ErrorModel(ILogger<ErrorModel> logger)
@@ -20,9 +16,13 @@ namespace Mc2.CrudTest.Presentation.Server.Pages
             _logger = logger;
         }
 
+        public string RequestId { get; set; }
+
+        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+
         public void OnGet()
         {
-            _logger.LogDebug($"serving OnGet() in ErrorModel");
+            _logger.LogDebug("serving OnGet() in ErrorModel");
             RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
         }
     }
