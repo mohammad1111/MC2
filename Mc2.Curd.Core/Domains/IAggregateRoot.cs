@@ -7,4 +7,5 @@ public interface IAggregateRoot<TIIdentity>
 {
     TIIdentity Id { get; }
     IList<IEvent<TIIdentity>> UncommittedEvents { get; }
+    Task LoadEvents(IEventStore eventStore);
 }

@@ -11,17 +11,20 @@ public abstract class CommandHandler<TIIdentity, TICommand> : ICommandHandler<TI
 {
     private readonly IRepository _repository;
     private readonly IEventBus _eventBus;
+    private readonly IEventStore _eventStore;
 
-    public CommandHandler(IRepository repository,IEventBus eventBus)
+    public CommandHandler(IRepository repository,IEventBus eventBus,IEventStore eventStore)
     {
         _repository = repository;
         _eventBus = eventBus;
+        _eventStore = eventStore;
     }
 
     public async Task Handler(ICommand command, TIIdentity identity)
     {
         var aggregateRoot = await _repository.GetByAsync(identity);
-        await HandlerAsync(aggregateRoot, command);
+        await aggregateRoot.LoadEvents(_eventStore);
+                                       await HandlerAsync(aggregateRoot, command);
         var events = aggregateRoot.UncommittedEvents.Select(x => new InboxEvent
         {
             EventContent = JsonConvert.SerializeObject(x),
