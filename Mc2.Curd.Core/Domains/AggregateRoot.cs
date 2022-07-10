@@ -3,14 +3,31 @@ using Newtonsoft.Json;
 
 namespace Mc2.Curd.Core.Domains;
 
-public class AggregateRoot<TIdentity> : IAggregateRoot<TIdentity>
-    where TIdentity : IIdentity
+public class AggregateRoot<TIIdentity> : IAggregateRoot<TIIdentity>
+    where TIIdentity : IIdentity
 {
     private readonly Dictionary<Type, Action<object>> _eventHandlers = new();
 
-    public TIdentity Id { get; }
+    public AggregateRoot(TIIdentity identity)
+    {
+    }
 
-    [JsonIgnore] public IList<IEvent<TIdentity>> UncommittedEvents { get; }
+    public TIIdentity Id { get; private set; }
+
+    [JsonIgnore] public IList<IEvent<TIIdentity>> UncommittedEvents { get; } = new List<IEvent<TIIdentity>>();
+
+    [JsonIgnore] public IList<UniqueConstraint> UniqueConstraints { get; } = new List<UniqueConstraint>();
+
+    public async Task LoadEvents(IEventStore eventStore)
+    {
+        IEnumerable<IEvent> domainEvents = await eventStore.LoadEvents(Id).ConfigureAwait(false);
+        ApplyEvents(domainEvents);
+    }
+
+    internal void SetIdentity(TIIdentity identity)
+    {
+        Id = identity;
+    }
 
     protected void Register<TAggregateEvent>(Action<TAggregateEvent> handler)
         where TAggregateEvent : IEvent
@@ -24,15 +41,14 @@ public class AggregateRoot<TIdentity> : IAggregateRoot<TIdentity>
         _eventHandlers[eventType] = e => handler((TAggregateEvent)e);
     }
 
-    public void Emit(IEvent<TIdentity> @event)
+    public void RegisterUniqueConstraint(UniqueConstraint uniqueConstraint)
     {
-        UncommittedEvents.Add(@event);
+        UniqueConstraints.Add(uniqueConstraint);
     }
 
-    public async Task LoadEvents(IEventStore eventStore)
+    public void Emit(IEvent<TIIdentity> @event)
     {
-        var domainEvents = await eventStore.LoadEvents(Id).ConfigureAwait(false);
-        ApplyEvents(domainEvents);
+        UncommittedEvents.Add(@event);
     }
 
     public void ApplyEvents(IEnumerable<IEvent> domainEvents)

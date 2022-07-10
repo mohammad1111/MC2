@@ -2,10 +2,12 @@ using Mc2.Curd.Core.Domains;
 
 namespace Mc2.Curd.Core.Commands;
 
-public interface ICommandHandler<TIIdentity,TICommand> 
-    where TIIdentity:IIdentity
+internal interface ICommandHandler<TIIdentity, TIAggregateRoot, TICommand>
+    where TIIdentity : IIdentity
     where TICommand : ICommand
-    
+    where TIAggregateRoot : IAggregateRoot
 {
-    Task HandlerAsync(IAggregateRoot<TIIdentity> aggregateRoot, ICommand command);
+    Task Handler(ICommand command, TIIdentity identity);
+
+    Task HandlerAsync(TIAggregateRoot aggregateRoot, ICommand command);
 }
